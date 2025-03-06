@@ -24,8 +24,6 @@ type PerplexityResponse = {
 app.use(cors());
 app.use(express.json());
 
-console.log("api?: ", process.env.PERPLEXITY_API_KEY);
-
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
