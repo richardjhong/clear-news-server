@@ -19,20 +19,20 @@ const client = new SecretsManagerClient({
   region: "us-east-2",
 });
 
-const getSecretValue = async (client: any, secret_name: string) => {
-  try {
-    return await client.send(
-      new GetSecretValueCommand({
-        SecretId: secret_name,
-        VersionStage: "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified
-      })
-    );
-  } catch (error) {
-    // For a list of exceptions thrown, see:
-    // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
-    throw error;
-  }
-};
+// const getSecretValue = async (client: any, secret_name: string) => {
+//   try {
+//     return await client.send(
+//       new GetSecretValueCommand({
+//         SecretId: secret_name,
+//         VersionStage: "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified
+//       })
+//     );
+//   } catch (error) {
+//     // For a list of exceptions thrown, see:
+//     // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
+//     throw error;
+//   }
+// };
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -56,38 +56,38 @@ app.use(express.json());
 
 const initializeApp = async () => {
   try {
-    const { SecretString } = await getSecretValue(client, secret_name);
-    const parsedSecretString = JSON.parse(SecretString);
+    // const { SecretString } = await getSecretValue(client, secret_name);
+    // const parsedSecretString = JSON.parse(SecretString);
 
     app.get("/health", (req, res) => {
       res.status(200).json({ status: "ok" });
     });
 
-    app.post("/api/analyze", async (req, res) => {
-      const { input } = req.body;
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${parsedSecretString.PERPLEXITY_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "sonar",
-          messages: [{ role: "user", content: input }],
-        }),
-      };
+    // app.post("/api/analyze", async (req, res) => {
+    //   const { input } = req.body;
+    //   const options = {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${parsedSecretString.PERPLEXITY_API_KEY}`,
+    //     },
+    //     body: JSON.stringify({
+    //       model: "sonar",
+    //       messages: [{ role: "user", content: input }],
+    //     }),
+    //   };
 
-      try {
-        const response = await fetch(
-          "https://api.perplexity.ai/chat/completions",
-          options
-        );
-        const data = (await response.json()) as PerplexityResponse;
-        res.json({ result: data.choices[0].message.content });
-      } catch (error) {
-        res.status(500).json({ error: "Server error" });
-      }
-    });
+    //   try {
+    //     const response = await fetch(
+    //       "https://api.perplexity.ai/chat/completions",
+    //       options
+    //     );
+    //     const data = (await response.json()) as PerplexityResponse;
+    //     res.json({ result: data.choices[0].message.content });
+    //   } catch (error) {
+    //     res.status(500).json({ error: "Server error" });
+    //   }
+    // });
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
