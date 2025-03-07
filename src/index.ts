@@ -19,8 +19,6 @@ const client = new SecretsManagerClient({
   region: "us-east-2",
 });
 
-let response;
-
 async function getSecretValue(client: any, secret_name: string) {
   try {
     return await client.send(
@@ -35,17 +33,6 @@ async function getSecretValue(client: any, secret_name: string) {
     throw error;
   }
 }
-
-(async () => {
-  try {
-    const response = await getSecretValue(client, secret_name);
-    console.log(response);
-  } catch (error) {
-    console.error("Error fetching secret:", error);
-  }
-})();
-
-// Your code goes here
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -73,11 +60,12 @@ app.get("/health", (req, res) => {
 
 app.post("/api/analyze", async (req, res) => {
   const { input } = req.body;
+  const { SecretString } = await getSecretValue(client, secret_name);
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.PERPLEXITY_API_KEY}`,
+      Authorization: `Bearer ${SecretString.PERPLEXITY_API_KEY}`,
     },
     body: JSON.stringify({
       model: "sonar",
