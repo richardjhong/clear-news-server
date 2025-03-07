@@ -65,7 +65,7 @@ app.post("/api/analyze", async (req, res) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${SecretString.PERPLEXITY_API_KEY}`,
+      Authorization: `Bearer ${SecretString["PERPLEXITY_API_KEY"]}`,
     },
     body: JSON.stringify({
       model: "sonar",
@@ -75,7 +75,7 @@ app.post("/api/analyze", async (req, res) => {
 
   console.log("right before try catch block");
   console.log(SecretString);
-  console.log(SecretString.PERPLEXITY_API_KEY);
+  console.log(SecretString["PERPLEXITY_API_KEY"]);
 
   try {
     const response = await fetch(
