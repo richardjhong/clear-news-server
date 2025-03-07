@@ -77,7 +77,7 @@ const initializeApp = async () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${SecretString["PERPLEXITY_API_KEY"]}`,
+          Authorization: `Bearer ${parsedSecretString.PERPLEXITY_API_KEY}`,
         },
         body: JSON.stringify({
           model: "sonar",
