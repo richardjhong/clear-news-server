@@ -4,6 +4,49 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// Use this code snippet in your app.
+// If you need more information about configurations or implementing the sample code, visit the AWS docs:
+// https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/getting-started.html
+
+import {
+  SecretsManagerClient,
+  GetSecretValueCommand,
+} from "@aws-sdk/client-secrets-manager";
+
+const secret_name = "clear-news-server-environmentVariables";
+
+const client = new SecretsManagerClient({
+  region: "us-east-2",
+});
+
+let response;
+
+async function getSecretValue(client: any, secret_name: string) {
+  try {
+    return await client.send(
+      new GetSecretValueCommand({
+        SecretId: secret_name,
+        VersionStage: "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified
+      })
+    );
+  } catch (error) {
+    // For a list of exceptions thrown, see:
+    // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
+    throw error;
+  }
+}
+
+(async () => {
+  try {
+    const response = await getSecretValue(client, secret_name);
+    console.log(response);
+  } catch (error) {
+    console.error("Error fetching secret:", error);
+  }
+})();
+
+// Your code goes here
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 

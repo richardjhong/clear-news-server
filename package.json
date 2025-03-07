@@ -21,6 +21,7 @@
   "homepage": "https://github.com/richardjhong/clear-news-server#readme",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.758.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.9",
