@@ -60,9 +60,12 @@ const initializeApp = async () => {
     console.log("SecretString successfully loaded.");
     console.log(SecretString);
     console.log("parsed?: ", JSON.parse(SecretString));
-    const parsedSecretString = JSON.parse(SecretString));
-    console.log('parsedSecretSTring: ', parsedSecretString);
-    console.log('parsedSecretSTring.api: ', parsedSecretString.PERPLEXITY_API_KEY);
+    const parsedSecretString = JSON.parse(SecretString);
+    console.log("parsedSecretSTring: ", parsedSecretString);
+    console.log(
+      "parsedSecretSTring.api: ",
+      parsedSecretString.PERPLEXITY_API_KEY
+    );
 
     app.get("/health", (req, res) => {
       res.status(200).json({ status: "ok" });
