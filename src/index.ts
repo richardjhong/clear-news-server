@@ -59,6 +59,7 @@ const initializeApp = async () => {
     const { SecretString } = await getSecretValue(client, secret_name);
     console.log("SecretString successfully loaded.");
     console.log(SecretString);
+    console.log("parsed?: ", JSON.parse(SecretString));
     console.log(SecretString["PERPLEXITY_API_KEY"]);
 
     app.get("/health", (req, res) => {
