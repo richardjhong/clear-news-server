@@ -73,6 +73,8 @@ app.post("/api/analyze", async (req, res) => {
     }),
   };
 
+  console.log("right before try catch block");
+
   try {
     const response = await fetch(
       "https://api.perplexity.ai/chat/completions",
