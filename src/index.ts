@@ -74,6 +74,7 @@ app.post("/api/analyze", async (req, res) => {
   };
 
   console.log("right before try catch block");
+  console.log(SecretString);
   console.log(SecretString.PERPLEXITY_API_KEY);
 
   try {
