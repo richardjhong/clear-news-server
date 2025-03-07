@@ -57,15 +57,7 @@ app.use(express.json());
 const initializeApp = async () => {
   try {
     const { SecretString } = await getSecretValue(client, secret_name);
-    console.log("SecretString successfully loaded.");
-    console.log(SecretString);
-    console.log("parsed?: ", JSON.parse(SecretString));
     const parsedSecretString = JSON.parse(SecretString);
-    console.log("parsedSecretSTring: ", parsedSecretString);
-    console.log(
-      "parsedSecretSTring.api: ",
-      parsedSecretString.PERPLEXITY_API_KEY
-    );
 
     app.get("/health", (req, res) => {
       res.status(200).json({ status: "ok" });
@@ -84,8 +76,6 @@ const initializeApp = async () => {
           messages: [{ role: "user", content: input }],
         }),
       };
-
-      console.log("right before try catch block");
 
       try {
         const response = await fetch(
