@@ -15,7 +15,6 @@ const getApiKey = async () => {
   if (PROD_ENV) {
     const localApiKey = process.env.PERPLEXITY_API_KEY;
     if (!localApiKey) throw new Error("LOCAL API KEY NOT FOUND");
-    console.log("using local env api key");
     return localApiKey;
   }
 
@@ -42,7 +41,6 @@ const getApiKey = async () => {
   const { SecretString } = await getSecretValue(client, secret_name);
   const parsedSecretString = JSON.parse(SecretString);
 
-  console.log("using aws secrets env key");
   return parsedSecretString.PERPLEXITY_API_KEY;
 };
 
