@@ -74,6 +74,7 @@ app.post("/api/analyze", async (req, res) => {
   };
 
   console.log("right before try catch block");
+  console.log(SecretString);
 
   try {
     const response = await fetch(
